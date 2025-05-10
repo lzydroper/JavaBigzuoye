@@ -36,3 +36,7 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+out
+javafx-sdk-21.0.7
+可执行文件
