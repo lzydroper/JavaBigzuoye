@@ -1,0 +1,4 @@
+.menu-button > .arrow-button {
+    visibility: hidden; /* 使箭头按钮不可见 */
+    -fx-padding: 0; /* 移除可能的内边距，进一步缩小空间 */
+}

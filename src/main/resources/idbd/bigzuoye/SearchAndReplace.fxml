@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="idbd.bigzuoye.SearchAndReplace">
+   <children>
+      <Button fx:id="btnUnfold" mnemonicParsing="false" onAction="#OnUnfold" prefHeight="50.0" prefWidth="50.0" text="开" textAlignment="CENTER" />
+      <VBox alignment="CENTER" maxHeight="100.0" maxWidth="1.7976931348623157E308" prefHeight="100.0" HBox.hgrow="ALWAYS">
+         <children>
+            <HBox maxHeight="50.0" maxWidth="1.7976931348623157E308" prefHeight="50.0">
+               <children>
+                  <TextField fx:id="tfSearch" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="查找" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#OnSearch" prefHeight="50.0" prefWidth="50.0" text="🔍" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#OnSearchNext" prefHeight="50.0" prefWidth="50.0" text="↓" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#OnSearchPrev" prefHeight="50.0" prefWidth="50.0" text="↑" textAlignment="CENTER" />
+                  <MenuButton alignment="CENTER" contentDisplay="RIGHT" graphicTextGap="0.0" mnemonicParsing="false" popupSide="TOP" prefHeight="50.0" prefWidth="50.0" stylesheets="@menu-button_no_arrow.css" text="☼" textAlignment="RIGHT">
+                     <items>
+                        <CheckMenuItem fx:id="cmiCaseSensitive" mnemonicParsing="false" text="区分大小写" />
+                        <CheckMenuItem fx:id="cmiWrapSearch" mnemonicParsing="false" selected="true" text="回绕" />
+                     </items>
+                  </MenuButton>
+                  <Button mnemonicParsing="false" onAction="#OnQuit" prefHeight="50.0" prefWidth="50.0" text="×" textAlignment="CENTER" />
+               </children>
+            </HBox>
+            <HBox fx:id="replacePane" alignment="CENTER" maxHeight="50.0" maxWidth="1.7976931348623157E308" prefHeight="50.0">
+               <children>
+                  <TextField fx:id="tfReplace" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="替换" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </TextField>
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnReplace" prefHeight="50.0" prefWidth="125.0" text="替换" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="260.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnReplaceAll" prefHeight="50.0" prefWidth="125.0" text="全部替换" textAlignment="CENTER">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</HBox>
