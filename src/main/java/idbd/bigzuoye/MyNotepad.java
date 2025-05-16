@@ -16,7 +16,7 @@ public class MyNotepad extends Application
     }
 
     @Override
-    public void start(Stage stage) throws IOException
+    public void start(Stage stage) throws IOException   // fxml在包装后用户无法更改，无意外
     {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MyNotepad.fxml"));
         Scene scene = new Scene(fxmlLoader.load());

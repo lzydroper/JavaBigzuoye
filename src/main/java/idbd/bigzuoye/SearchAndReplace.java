@@ -28,7 +28,7 @@ public class SearchAndReplace
         toUnfold = !_toUnfold_;
     }
 
-    @FXML private void OnUnfold() throws IOException
+    @FXML private void OnUnfold() throws IOException   // fxml在包装后用户无法更改，无意外
     {
         if (toUnfold)
         {

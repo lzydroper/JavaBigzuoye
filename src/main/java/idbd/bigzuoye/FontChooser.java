@@ -1,6 +1,7 @@
 package idbd.bigzuoye;
 
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.*;
 import javafx.scene.control.*;
 import javafx.scene.text.Font;
@@ -34,12 +35,10 @@ public class FontChooser
                 8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 48, 72));
         fontSizeComboBox.getSelectionModel().select(Integer.valueOf(12));
 
-        // 添加监听器预览字体
-        fontFamilyComboBox.setOnAction(e -> updatePreview());
-        fontSizeComboBox.setOnAction(e -> updatePreview());
+
     }
 
-    private void updatePreview()
+    @FXML private void updatePreview()
     {
         String family = fontFamilyComboBox.getValue();
         Integer size = fontSizeComboBox.getValue();

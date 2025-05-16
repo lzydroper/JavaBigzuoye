@@ -14,6 +14,7 @@ import javafx.stage.*;
 import javafx.util.Duration;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.*;
@@ -165,21 +166,10 @@ public class MyNotepadController
                 }
             }
 
-            try (BufferedReader reader = new BufferedReader(new FileReader(file)))
+            try
             {
-                StringBuilder content = new StringBuilder();
-                String line;
-                while ((line = reader.readLine()) != null)
-                {
-                    content.append(line).append("\n"); // 读取文件内容，注意处理换行符
-                }
-                // 移除最后一个换行符
-                if (!content.isEmpty() && content.charAt(content.length() - 1) == '\n')
-                {
-                    content.deleteCharAt(content.length() - 1);
-                }
-
-                textArea.setText(content.toString());
+                String content = Files.readString(file.toPath());
+                textArea.setText(content);
                 System.out.println("load success");
 
                 // 记录当前打开文件
@@ -190,7 +180,7 @@ public class MyNotepadController
                 // 告知已保存
                 hadSaved.set(true);
             } catch (IOException e) {
-                System.err.println("Error during file open and loading: " + e.getMessage());
+                // 意外处理
                 showInfoDialogOnlyAccept("打开文件失败: " + e.getMessage());
             }
         }
@@ -253,6 +243,7 @@ public class MyNotepadController
         }
     }
 
+    // 编辑选项卡
     @FXML private void OnUndo()
     {
         System.out.println("OnUndo called");
@@ -299,7 +290,7 @@ public class MyNotepadController
         }
     }
 
-    @FXML public void OnSearch() throws IOException
+    @FXML public void OnSearch() throws IOException   // fxml在包装后用户无法更改，无意外
     {
         System.out.println("OnSearch called");
 
@@ -320,7 +311,7 @@ public class MyNotepadController
         }
     }
 
-    @FXML public void OnReplace() throws IOException
+    @FXML public void OnReplace() throws IOException   // fxml在包装后用户无法更改，无意外
     {
         System.out.println("OnReplace called");
 
@@ -363,7 +354,7 @@ public class MyNotepadController
         textArea.positionCaret(caretPos + date.length());
     }
 
-    @FXML private void OnFont() throws IOException
+    @FXML private void OnFont() throws IOException   // fxml在包装后用户无法更改，无意外
     {
         System.out.println("OnFont called");
 
@@ -383,7 +374,13 @@ public class MyNotepadController
         Font newFont = controller.getSelectedFont();
         if (newFont != null)
         {
-            textArea.setFont(newFont);
+            // 延迟更新布局
+            IndexRange selection = textArea.getSelection();
+            Platform.runLater(() -> {
+                textArea.setFont(newFont);
+                textArea.setText(textArea.getText());
+                textArea.selectRange(selection.getStart(), selection.getEnd());
+            });
         }
     }
 
@@ -394,7 +391,8 @@ public class MyNotepadController
 //
 //    }
 
-    @FXML private void OnAbout() throws IOException
+    // 查看选项卡
+    @FXML private void OnAbout() throws IOException   // fxml在包装后用户无法更改，无意外
     {
         System.out.println("OnAbout called");
 
@@ -418,11 +416,10 @@ public class MyNotepadController
     {
         if (file != null)
         {
-            try (FileWriter fileWriter = new FileWriter(file))
+            try
             {
                 // 保存写入
-                fileWriter.write(textArea.getText());
-                fileWriter.flush();
+                Files.writeString(file.toPath(), textArea.getText());
                 // 记录当前打开文件
                 currentFilePath = file.getAbsolutePath();
                 currentFileName = file.getName();
@@ -431,13 +428,16 @@ public class MyNotepadController
                 // 告知已保存
                 hadSaved.set(true);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                // 意外处理
+                // 无法保存
+                showInfoDialogOnlyAccept("保存至目录"+ file.getAbsolutePath() +"失败：" + e.getMessage());
+//                throw new RuntimeException(e);
             }
         }
     }
     // 编辑相关
     // 搜索与替换
-    private void openSearchAndReplace(boolean replace) throws IOException
+    private void openSearchAndReplace(boolean replace) throws IOException   // fxml在包装后用户无法更改，无意外
     {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("SearchAndReplace.fxml"));
         Parent root = loader.load();
